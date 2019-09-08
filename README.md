@@ -64,7 +64,7 @@ Now let's go into the details for each step:
   be something like  **C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0**
 - Also add the CUDA **bin and libnvvp** installation directory into the **Path** environment variable.   
 ![Cudahome](./Images/CUDAHOME.png)
-![PathEnv](./Image/PathEnv.png)
+![PathEnv](./Images/PathEnv.png)
 
 - Open CMake. Specify the dlib source folder and build folder. 
 

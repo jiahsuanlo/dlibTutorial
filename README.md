@@ -56,8 +56,16 @@ Now let's go into the details for each step:
 
 #### a. Complie the dlib library with CUDA
 
-- Install CMake if it is not installed yet (https://cmake.org/download/).
-- Install 
+- Install **CMake** if it is not installed yet (https://cmake.org/download/).
+- Install **CUDA** and **cudnn**. Make sure the cudnn is compatible for the CUDA version. Also make sure the C++ compiler
+  is compatible with the CUDA version. In my case, I use MSVC 2017 C++ compiler and CUDA 10.0, and they should work 
+  with each other.
+- After installing CUDA, set the environment variable **CUDA_HOME** and **CUDA_PATH** as the CUDA installation directory. It should 
+  be something like  **C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0**
+- Also add the CUDA **bin and libnvvp** installation directory into the **Path** environment variable.   
+![Cudahome](./Images/CUDAHOME.png)
+![PathEnv](./Image/PathEnv.png)
+
 - Open CMake. Specify the dlib source folder and build folder. 
 
 

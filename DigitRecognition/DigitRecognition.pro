@@ -46,22 +46,6 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-# Link to Cuda
-
-#LIBS += L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.0\lib\x64"
-#LIBS += -lcurand -lcublas -lcublas_device -lcudnn -lcudart_static
-
-#win32:CONFIG(release, debug|release): LIBS += -L$$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32/' -lcuda
-#else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32/' -lcudad
-
-#INCLUDEPATH += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32'
-#DEPENDPATH += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32'
-
-#win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32/libcuda.a'
-#else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32/libcudad.a'
-#else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32/cuda.lib'
-#else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/Win32/cudad.lib'
-
 
 
 # ===== 64bit dlib =====

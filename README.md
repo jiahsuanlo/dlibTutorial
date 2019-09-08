@@ -77,8 +77,8 @@ will be installed to this folder after dlib compilation. It is important to run 
 correctly set up. Later on the Qt project will link to the dlib library from the **installed** folder.
 ![CMakeInstall](./Images/CMakeInstall.png)
 - Click **Generate** then **Open Project** to open the dlib project in Visual Studio
-- Compile the solution in **Release** mode (the **Debug** mode will not work since the CUDA library is release library) and remember 
-to run the **INSTALL** project for copying the files to the install folder.
+- Compile the solution in both **Debug** and **Release** mode and remember to run the **INSTALL** project for copying the files 
+to the install folder.
 
 #### b. Link the built dlib library to the Qt project
 

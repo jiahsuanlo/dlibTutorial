@@ -72,8 +72,50 @@ Now let's go into the details for each step:
 - Make sure the **DLIB_USE_CUDA** is **checked** after configuring. If it shows **OFF**, it means the CUDA version and compiler 
   version are compatible so that the compiler can not compile the CUDA test project. 
 ![CMakeConf](./Images/CMakeConf.png)
+- Set the **CMAKE_INSTALL_PREFIX** to the local folder of your choice. The library files, configuration files, and include source codes
+will be installed to this folder after dlib compilation. It is important to run the **INSTALL** project so that dlib can be 
+correctly set up. Later on the Qt project will link to the dlib library from the **installed** folder.
+![CMakeInstall](./Images/CMakeInstall.png)
+- Click **Generate** then **Open Project** to open the dlib project in Visual Studio
+- Compile the solution in **Release** mode (the **Debug** mode will not work since the CUDA library is release library) and remember 
+to run the **INSTALL** project for copying the files to the install folder.
 
-  
+#### b. Link the built dlib library to the Qt project
+
+Add something similar to the following in the Qt project file
+
+```
+# ===== 64bit dlib =====
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../dlib-19.17/Install/lib/ -ldlib19.17.0_release_64bit_msvc1916
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../dlib-19.17/Install/lib/ -ldlib19.17.0_debug_64bit_msvc1916
+
+INCLUDEPATH += $$PWD/../../dlib-19.17/Install/include
+DEPENDPATH += $$PWD/../../dlib-19.17/Install/include
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../dlib-19.17/Install/lib/libdlib19.17.0_release_64bit_msvc1916.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../dlib-19.17/Install/lib/libdlib19.17.0_debug_64bit_msvc1916.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../../dlib-19.17/Install/lib/dlib19.17.0_release_64bit_msvc1916.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../../dlib-19.17/Install/lib/dlib19.17.0_debug_64bit_msvc1916.lib
+```
+
+#### c. Link the CUDA and cudnn library to the Qt project
+
+Add something similar to the following in the Qt project file
+
+```
+# ===== 64bit cuda =====
+win32: LIBS += -L$$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64/' -lcurand -lcudart -lcuda -lcublas -lcusolver
+
+INCLUDEPATH += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64'
+DEPENDPATH += $$PWD/'../../../Program Files/NVIDIA GPU Computing Toolkit/CUDA/v10.0/lib/x64'
+
+
+win32: LIBS += -L$$PWD/../../../Users/jlo/Documents/Software/cudnn-10.0-windows10-x64-v7.5.1.10/cuda/lib/x64/ -lcudnn
+INCLUDEPATH += $$PWD/../../../Users/jlo/Documents/Software/cudnn-10.0-windows10-x64-v7.5.1.10/cuda/lib/x64
+DEPENDPATH += $$PWD/../../../Users/jlo/Documents/Software/cudnn-10.0-windows10-x64-v7.5.1.10/cuda/lib/x64
+```
+ 
+Then it should be ready to go! 
  
 
 

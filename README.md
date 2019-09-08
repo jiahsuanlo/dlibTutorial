@@ -33,8 +33,9 @@ to set up dlib for both options:
 	Here is an example, the dlib main folder is **dlib-19.17** and its relative location with the project folder
 	is like following:
 	
-	/dlib-19.17
-	/Workspace/ThisProject
+	./dlib-19.17
+	
+	./Workspace/ThisProject
 	
 	![CPU Project](./Images/CpuProject.png)
 	

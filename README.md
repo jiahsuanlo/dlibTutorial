@@ -7,6 +7,9 @@ C++ dlib simple tutorial. The tutorials in this repo are based on the examples f
 - Qt 5.12.4
 - Qt Creator 4.9.2
 - MSVC 2017
+- CMake 3.14.0
+- CUDA 10.0
+- cudnn 7.5.1.10 for CUDA 10.0
 
 ## Download dlib source file
 
@@ -27,7 +30,7 @@ to set up dlib for both options:
 ![NewProject](./Images/NewProject.png)   
 
 2. After creating the project, in the project file:
-	- Add the main folder to the include path. 
+	- Add the main folder to the include path (for example: INCLUDEPATH+= "..\..\dlib-19.17") 
 	- Add the /dlib/all/source.cpp to the project
 	
 	Here is an example, the dlib main folder is **dlib-19.17** and its relative location with the project folder
@@ -38,6 +41,26 @@ to set up dlib for both options:
 	./Workspace/ThisProject
 	
 	![CPU Project](./Images/CpuProject.png)
+	
+3. Then the project should be ready to go!
+
+### Setup a Qt project using dlib with **CUDA** support
+
+It is more involved to setup a Qt project using dlib with CUDA support. The three major steps are:
+
+a. Compile the dlib library with CUDA 
+b. Link the built dlib library to the Qt project
+c. Link the CUDA and cudnn library to the Qt project
+
+Now let's go into the details for each step:
+
+#### a. Complie the dlib library with CUDA
+
+- Install CMake if it is not installed yet (https://cmake.org/download/).
+- Install 
+- Open CMake. Specify the dlib source folder and build folder. 
+
+
 	
 	
 	

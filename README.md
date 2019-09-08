@@ -68,10 +68,10 @@ Now let's go into the details for each step:
 
 - Open CMake. Specify the dlib source folder and build folder. 
 - Click **Configure** button. A window will pop up for selecting the compiler. Remember to select **x64**
-![CmakeCompiler](./Images/CmakeCompiler.png)
+![CmakeCompiler](./Images/CMakeCompiler.png)
 - Make sure the **DLIB_USE_CUDA** is **checked** after configuring. If it shows **OFF**, it means the CUDA version and compiler 
   version are compatible so that the compiler can not compile the CUDA test project. 
-![CMakeConfig](./Images/CMakeConfig.png)
+![CMakeConf](./Images/CMakeConf.png)
 
   
  

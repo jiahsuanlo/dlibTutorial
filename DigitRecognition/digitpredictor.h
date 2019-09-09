@@ -72,8 +72,12 @@ public:
 
     void Train();
 
+    void EvaluateTrainingSet();
+    void EvaluateTestSet();
+
     // Utitlity Functions
     void LoadData(const QString &data_dir);
+    void LoadModel(const QString &filename);
     void SaveModel(const QString &filename);
 
     // Getters
@@ -91,8 +95,6 @@ private:
     net_type net_;
     dlib::dnn_trainer<net_type> trainer_;
     DigitPredictorParams params_;
-
-
 
 };
 

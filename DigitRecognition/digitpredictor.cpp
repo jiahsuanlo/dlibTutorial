@@ -21,6 +21,18 @@ void DigitPredictor::Train()
     // defined above or the maximum number of epochs as been executed (defaulted to 10000).
     trainer_.train(training_images_, training_labels_);
 
+    // clean model to reduce size
+    net_.clean();
+
+    // evaluate training set
+    EvaluateTrainingSet();
+
+    std::cout<< "training is done!!\n";
+
+}
+
+void DigitPredictor::EvaluateTrainingSet()
+{
     // Now let's run the training images through the network.  This statement runs all the
     // images through it and asks the loss layer to convert the network's raw output into
     // labels.  In our case, these labels are the numbers between 0 and 9.
@@ -37,12 +49,28 @@ void DigitPredictor::Train()
 
     }
 
-    // clean model to reduce size
-    net_.clean();
-
-    std::cout << "training num_right: " << num_right << "\n";
+    std::cout << "\ntraining num_right: " << num_right << "\n";
     std::cout << "training num_wrong: " << num_wrong << "\n";
     std::cout << "training accuracy:  " << num_right/double(num_right+num_wrong) <<"\n";
+
+}
+
+void DigitPredictor::EvaluateTestSet()
+{
+    std::vector<unsigned long> predicted_labels= net_(testing_images_);
+    int num_correct= 0;
+    int num_wrong= 0;
+
+    for (size_t i=0; i<testing_images_.size(); ++i)
+    {
+        if (predicted_labels[i] == testing_labels_[i])
+            num_correct++;
+        else
+            num_wrong++;
+    }
+    std::cout<<"\ntest num_right: " << num_correct<<"\n";
+    std::cout<<"test num_wrong: " << num_wrong<<"\n";
+    std::cout<<"test accuracy: " << double(num_correct)/(num_correct+num_wrong)<<"\n";
 
 }
 
@@ -58,6 +86,13 @@ void DigitPredictor::LoadData(const QString &data_dir)
                              testing_images_, testing_labels_);
 
     std::cout<<"Mnist Data loaded successfully!!\n";
+}
+
+void DigitPredictor::LoadModel(const QString &filename)
+{
+    dlib::deserialize(filename.toStdString()) >> net_;
+
+    std::cout<<"CNN Model loaded successfullly!!\n";
 }
 
 void DigitPredictor::SaveModel(const QString &filename)

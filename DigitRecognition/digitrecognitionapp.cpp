@@ -18,7 +18,9 @@ void DigitRecognitionApp::on_pushButtonStart_clicked()
 {
     digitpred_.Train();
 
+    // enable save and evaluate model buttons
     ui->pushButtonSaveModel->setEnabled(true);
+    ui->pushButtonEvaluate->setEnabled(true);
 }
 
 void DigitRecognitionApp::on_pushButtonSelectDirectory_clicked()
@@ -29,11 +31,10 @@ void DigitRecognitionApp::on_pushButtonSelectDirectory_clicked()
     digitpred_.LoadData(in_dir);
 
     // show on line edit
-    ui->lineEditDataDirectory->setText(in_dir);
+    ui->lineEditDataDirectory->setText(in_dir); 
 
     // enable gui
-    ui->groupBoxTrainer->setEnabled(true);
-    ui->pushButtonStart->setEnabled(true);    
+    EnableGUI();
 }
 
 void DigitRecognitionApp::on_lineEditLearnRate_textChanged(const QString &arg1)
@@ -75,7 +76,11 @@ void DigitRecognitionApp::on_lineEditMiniBatchSize_textChanged(const QString &ar
 void DigitRecognitionApp::on_lineEditMnistSync_textChanged(const QString &arg1)
 {
     dp::DigitPredictorParams &params= digitpred_.Params();
-    params.sync_filename= arg1.toStdString();
+
+    QFileInfo modelfinfo(ui->lineEditModelFile->text());
+    QString syncfile= modelfinfo.dir().absoluteFilePath(arg1);
+
+    params.sync_filename= syncfile.toStdString();
     digitpred_.SetTrainerSettings();
 }
 
@@ -109,4 +114,50 @@ void DigitRecognitionApp::on_pushButtonSaveModel_clicked()
 
     digitpred_.SaveModel(filename);
 
+}
+
+void DigitRecognitionApp::on_pushButtonSelectModel_clicked()
+{
+    QString filename= QFileDialog::getOpenFileName(this,
+                                                   tr("Select CNN Model File"),
+                                                   "",
+                                                   tr("Data file (*.dat)"));
+    QFileInfo finfo(filename);
+    if (finfo.exists() && finfo.isFile())
+    {
+        digitpred_.LoadModel(filename);
+    }
+
+    // show on line edit
+    ui->lineEditModelFile->setText(filename);
+
+    // enable gui
+    EnableGUI();
+
+    // setup sync file using the sync line edit text
+    on_lineEditMnistSync_textChanged(ui->lineEditMnistSync->text());
+
+}
+
+void DigitRecognitionApp::EnableGUI()
+{
+    if (!ui->lineEditModelFile->text().isEmpty() &&
+           !ui->lineEditDataDirectory->text().isEmpty())
+    {
+        // set sync file
+        QFileInfo finfo(ui->lineEditModelFile->text());
+        QString basename= finfo.baseName();
+        QString syncfile= basename+"_sync";
+        ui->lineEditMnistSync->setText(syncfile);
+
+        // enable gui
+        ui->groupBoxTrainer->setEnabled(true);
+        ui->pushButtonStart->setEnabled(true);
+    }
+}
+
+void DigitRecognitionApp::on_pushButtonEvaluate_clicked()
+{
+    digitpred_.EvaluateTrainingSet();
+    digitpred_.EvaluateTestSet();
 }

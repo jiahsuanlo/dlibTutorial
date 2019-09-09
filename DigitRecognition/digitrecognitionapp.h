@@ -36,11 +36,19 @@ private slots:
 
     void on_pushButtonSaveModel_clicked();
 
+    void on_pushButtonSelectModel_clicked();
+
+    void on_pushButtonEvaluate_clicked();
+
 private:
     Ui::DigitRecognitionApp *ui;
 
+    void EnableGUI();
+
     // ==== digit recognition ====
     dp::DigitPredictor digitpred_;
+
+
 };
 
 #endif // DIGITRECOGNITIONAPP_H
